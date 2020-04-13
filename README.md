@@ -1,7 +1,7 @@
 # Image-processing
 画像処理系のリポジトリです
 
-# 1.赤色で二植化、重心検出・描画したものをLINEに送信するプログラム
+# 1.赤色で二植化、重心検出・描画したものをLINEに送信する
 gravity_production.py
 
 元画像  
