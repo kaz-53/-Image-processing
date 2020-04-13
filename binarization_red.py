@@ -6,17 +6,6 @@ def BGR_extraction(image, bgrLower, bgrUpper):
     result = cv2.bitwise_and(image, image, mask=img_mask) # 元画像とマスクを合成
     return result
 
-# 画像の中心線を引く関数
-def center(img_name):
-    try:
-        h, w, c = img_name.shape#画像の高さ、幅、色データ カラーの時
-    except:
-        h, w,  = img_name.shape  # 画像の高さ、幅、色データ　白黒の時
-    ch = int(h / 2)
-    cw = int(w / 2)
-    cv2.line(img_name, (cw, 0), (cw, h), (255, 255, 255))#線の色が黒の時はすべて255
-    cv2.line(img_name, (0, ch), (w, ch), (0, 0, 0))#線の色は白
-
 import sys
 import cv2
 import numpy as np
@@ -43,14 +32,5 @@ except:
     print("プログラムを終了します")
     sys.exit()
 
-# 重心
-M = cv2.moments(biggest)
-cx = int(M["m10"] / M["m00"])#重心のｘ座標
-cy = int(M["m01"] / M["m00"])#重心のｙ座標
-
-cv2.circle(img, (cx,cy), 10, 300, -1, 4)
-#(画像,中心座標,円の半径,円の色,円の線の太さ(負で塗りつぶし) thickness=1,線の種類 lineType=8, shift=0)
-
-center(img)#画像の中心線を引く(白・黒色)
 cv2.imwrite(pic_rename,img)#画像を保存
 print("\n「" + pic_rename + "」という名前で画像を保存しました")
