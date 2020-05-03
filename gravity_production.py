@@ -20,7 +20,7 @@ def BGR_extraction(image, bgrLower, bgrUpper):
 def center(img_name):
     try:
         h, w, c = img_name.shape#画像の高さ、幅、色データ カラーの時
-    except:
+    except:#白黒画像だった時のエラー回避
         h, w,  = img_name.shape  # 画像の高さ、幅、色データ　白黒の時
     ch = int(h / 2)
     cw = int(w / 2)
@@ -33,7 +33,7 @@ def inputs(pic_name):
     hsv = cv2.cvtColor(img_red, cv2.COLOR_BGR2HSV)  # BGRをHSVに変換
     h_img, s_img, v_img = cv2.split(hsv)  # HSVに分解
     cv2.imwrite(pic_rename[:-4] + "_mask.jpg", s_img)  # マスク画像を保存
-    ret, img_bl = cv2.threshold(s_img, 0, 255,cv2.THRESH_BINARY)  # cv2.THRESH_OTSUをフラグに足すと閾値を自動決定してくれます。 + cv2.THRESH_OTSU
+    ret, img_bl = cv2.threshold(s_img, 0, 255,cv2.THRESH_BINARY) 
     contours, hierarchy = cv2.findContours(img_bl, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # 輪郭検知
     biggest = max(contours, key=lambda x: cv2.contourArea(x))  # 一番大きい輪郭を選択する。
     return img_def,img_red,img_bl,s_img,biggest#元画像、赤の画像、黒の画像、白黒の画像、一番大きい輪郭
@@ -61,6 +61,7 @@ import numpy as np
 
 print("赤色で二植化、重心検出・描画・lineに送信するプログラムです。\n")
 
+#lineのトークンは https://notify-bot.line.me/ja/ のマイペース→トークンを発行する→発行したいトークを選択し発行　によって入手してください
 token = 'mgmxnUGIrj6pScylisJNpVVWn4Pp4Uf0dgOuHUX4CC'#exampleです
 url = 'https://notify-api.line.me/api/notify'
 headers = {'Authorization': 'Bearer ' + token}
