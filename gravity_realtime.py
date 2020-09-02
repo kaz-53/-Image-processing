@@ -71,10 +71,10 @@ while(1):
     #画像処理
     s_img, biggest = inputs(original)
 
-    if biggest == []:
-        cv2.imshow('Red', original)    
-    else:
+    try:
         cv2.imshow('Red', GXGY(biggest, s_img, original))    
+    except:#赤色を認識できなかったときは生画像を表示
+        cv2.imshow('Red', original)            
     
     k = cv2.waitKey(5) & 0xFF
     if k == 27:
